@@ -1,6 +1,6 @@
 package App.API;
 
-public class Main {
+public class Api {
   public static void main(String[] args) {
     System.out.println(123);
   }
