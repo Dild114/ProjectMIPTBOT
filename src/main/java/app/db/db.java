@@ -1,4 +1,4 @@
-package App.db;
+package app.db;
 
 public class db {
 }
