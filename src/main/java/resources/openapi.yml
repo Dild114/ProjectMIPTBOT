@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: App API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /categories:
+    get:
+      summary: Get a list of all categories
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+    post:
+      summary: Add category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Category added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+    delete:
+      summary: Delete category
+      responses:
+        '204':
+          description: Category deleted successfully
+
+  /signup:
+    post:
+      summary: Add account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: Account successfully created
+
+  /allcategories:
+    delete:
+      summary: Clear categories in account
+      responses:
+        '204':
+          description: Categories successfully deleted
+
+components:
+  schemas:
+    Category:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: "DevOps"
+    Account:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: "MIPT"
+        password:
+          type: string
+          example: "qwerty"
