@@ -14,7 +14,6 @@ import tgBot.parser.Article;
 import tgBot.parser.SiteParser;
 
 
-
 /**
  * Парсер сайта: <a href="https://habr.com/ru/news/page1">habr</a>
  */
