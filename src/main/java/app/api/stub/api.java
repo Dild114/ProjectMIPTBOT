@@ -3,13 +3,7 @@ package app.api.stub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
@@ -20,7 +14,6 @@ public class api {
   public static void main(String[] args) {
     ObjectMapper objectMapper = new ObjectMapper();
 
-    // Устанавливаем порт (по желанию)
     Spark.port(4567);
 
     Spark.get("/sites", (Request request, Response response) -> {
@@ -53,11 +46,6 @@ public class api {
       return null;
     });
 
-    Spark.get("/sites", (Request request, Response response) -> {
-      LOG.info("запрос get на /sites");
-      response.status(501);
-      return null;
-    });
 
     Spark.get("/categories", (Request request, Response response) -> {
       LOG.info("запрос get на /categories");
@@ -100,7 +88,5 @@ public class api {
       response.status(501);
       return null;
     });
-
-
   }
 }
