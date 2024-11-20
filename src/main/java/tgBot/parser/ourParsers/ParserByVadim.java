@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,7 +20,7 @@ import tgBot.parser.SiteParser;
 public class ParserByVadim implements SiteParser {
   private static final String url = "https://habr.com/ru/news/page1";
   private static final String site = "https://habr.com";
-  private static final Logger log = LogManager.getLogger(ParserByVadim.class);
+  private Logger log;
 
   @Override
   public List<Article> parseAllSite() {
