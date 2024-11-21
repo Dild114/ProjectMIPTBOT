@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-
 import tgBot.parser.Article;
 import tgBot.parser.SiteParser;
-
 
 /**
  * Парсер сайта: <a href="https://habr.com/ru/news/page1">habr</a>
@@ -21,7 +17,6 @@ import tgBot.parser.SiteParser;
 public class ParserByVadim implements SiteParser {
   private static final String url = "https://habr.com/ru/news/page1";
   private static final String site = "https://habr.com";
-  private static final Logger log = LogManager.getLogger(ParserByVadim.class);
 
   @Override
   public List<Article> parseAllSite() {
@@ -38,7 +33,7 @@ public class ParserByVadim implements SiteParser {
         result.add(new Article(link, title, text, date));
       }
     } catch (Exception e) {
-      log.error("Ошибка во время парсинга сайта: " + url);
+      log.error("Ошибка во время парсинга сайта: " + url, e);
     }
     return result.stream().toList();
   }
