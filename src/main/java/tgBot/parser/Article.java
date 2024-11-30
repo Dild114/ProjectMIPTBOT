@@ -1,14 +1,17 @@
 package tgBot.parser;
 
+import lombok.Getter;
+
 /**
  * Структура данных для хранения информации о статье,
  * включая ссылку, заголовок, текст и дату публикации.
  */
+@Getter //Автоматически создает геттеры для полей.
 public class Article {
-  public String link;
-  public String title;
-  public String date;
-  public String text;
+  private String link;
+  private String title;
+  private String date;
+  private String text;
 
   public Article(String link, String title, String text, String date) {
     this.link = link;
