@@ -1,14 +1,14 @@
-package tgBot.parser.ourParsers;
+package tgBot.parser;
 
-import tgBot.parser.Article;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
-public class FirstParserTest {
+public class FirstTest {
   @Test
   void testParseAllSiteWithCustomHtml() {
-    FirstParser parser = new FirstParser();
+    SiteParser parser = new FirstParser();
 
     String html = """
                 <html>

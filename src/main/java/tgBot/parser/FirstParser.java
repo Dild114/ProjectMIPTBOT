@@ -1,4 +1,4 @@
-package tgBot.parser.ourParsers;
+package tgBot.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
-import tgBot.parser.Article;
-import tgBot.parser.SiteParser;
 
 
 /**
