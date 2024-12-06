@@ -12,7 +12,7 @@ import org.jsoup.nodes.Document;
  * Парсер сайта: <a href="https://habr.com/ru/news/page1">habr</a>
  */
 @Slf4j
-public class FirstParser implements SiteParser {
+public class HabrParser implements SiteParser {
   private static final String site = "https://habr.com";
 
   @Override

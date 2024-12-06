@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
-public class FirstTest {
+public class HabrParserTest {
   @Test
   void testParseAllSiteWithCustomHtml() {
-    SiteParser parser = new FirstParser();
+    SiteParser parser = new HabrParser();
 
     String html = """
                 <html>
