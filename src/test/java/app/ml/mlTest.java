@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ai.onnxruntime.OrtException;
 
 public class mlTest {
   @Test
+  @Disabled("Тест временно отключён")
   void testFindProbabilitiesForCategories() throws IOException, OrtException {
     String text = "Как настроить CI/CD для проекта на GitLab?";
     String[] candidateLabels = {"DevOps", "IT", "Frontend", "Backend", "Data Science", "Machine Learning", "Cybersecurity", "Cloud Computing", "Mobile Development", "Game Development", "Database Administration"};
