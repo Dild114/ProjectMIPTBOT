@@ -74,7 +74,7 @@ public class ml {
     // Для каждой категории выбираем вероятность того, что она соответствует тексту
     Float[] entailmentProbabilities = new Float[probabilities.length];
     for (int i = 0; i < probabilities.length; i++) {
-      entailmentProbabilities[i] = probabilities[i][0]; // Индекс 0 — Entailment
+      entailmentProbabilities[i] = probabilities[i][1]; // Индекс 1 — Entailment
     }
     LOG.info("Модель завершила работу");
     return entailmentProbabilities;

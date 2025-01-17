@@ -19,17 +19,17 @@ public class mlTest {
     Map<String, Float> probabilities = ml.findProbabilitiesForCategories(text, candidateLabels);
     
     Map<String, Float> probabilitiesForCategories = new HashMap<>();
-    probabilitiesForCategories.put("Data Science", 0.42180878f);
-    probabilitiesForCategories.put("DevOps", 0.86746943f);
-    probabilitiesForCategories.put("Backend", 0.81870013f);
-    probabilitiesForCategories.put("Database Administration", 0.5658511f);
-    probabilitiesForCategories.put("Cloud Computing", 0.83641315f);
-    probabilitiesForCategories.put("Frontend", 0.8449678f);
-    probabilitiesForCategories.put("Mobile Development", 0.91840273f);
-    probabilitiesForCategories.put("Cybersecurity", 0.18779641f);
-    probabilitiesForCategories.put("IT", 0.88502884f);
-    probabilitiesForCategories.put("Machine Learning", 0.8351789f);
-    probabilitiesForCategories.put("Game Development", 0.57367396f);
+    probabilitiesForCategories.put("Data Science", 0.039048802f);
+    probabilitiesForCategories.put("DevOps", 0.011645611f);
+    probabilitiesForCategories.put("Backend", 0.048307385f);
+    probabilitiesForCategories.put("Database Administration", 0.031594772f);
+    probabilitiesForCategories.put("Cloud Computing", 0.012672423f);
+    probabilitiesForCategories.put("Frontend", 0.028294854f);
+    probabilitiesForCategories.put("Mobile Development", 0.008227297f);
+    probabilitiesForCategories.put("Cybersecurity", 0.015962604f);
+    probabilitiesForCategories.put("IT", 0.03644597f);
+    probabilitiesForCategories.put("Machine Learning", 0.012106622f);
+    probabilitiesForCategories.put("Game Development", 0.017827472f);
     
     assertEquals(probabilities, probabilitiesForCategories);
   }
