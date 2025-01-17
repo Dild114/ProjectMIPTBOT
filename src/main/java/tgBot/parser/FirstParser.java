@@ -22,7 +22,7 @@ public class FirstParser implements SiteParser {
 
   @Override
   public List<Article> parseAllSite(String url) {
-    final List<Article> result = new ArrayList<>();
+    final List<Article> data = new ArrayList<>();
 
     try {
       Document document = Jsoup.connect(url).get();
@@ -32,11 +32,11 @@ public class FirstParser implements SiteParser {
         String link = site + post.select("h2.tm-title a.tm-title__link").attr("href");
         String text = post.select("div.tm-article-body").text();
         String date = post.select("div.tm-article-snippet__meta-container span a.tm-article-datetime-published").text();
-        result.add(new Article(link, title, text.substring(0, text.length() - 13), date));
+        data.add(new Article(title, link, text.substring(0, text.length() - 13), date));
       }
     } catch (Exception e) {
       log.error("Ошибка во время парсинга сайта: {}", url, e);
     }
-    return result;
+    return data;
   }
 }
