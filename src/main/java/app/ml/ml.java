@@ -17,7 +17,7 @@ public class ml {
   private static final Logger LOG = LoggerFactory.getLogger(ml.class);
 
   // Токенизация текста заранее сохранённым токенизатором
-  private static Encoding[] tokenizer(String text, String[] groups) throws IOException {
+  private static Encoding[] tokenizer(String text, String... groups) throws IOException {
     LOG.info("Начало токенизации");
     HuggingFaceTokenizer tokenizer = HuggingFaceTokenizer.newInstance(Paths.get("src/main/resources/ml/tokenizer"));
 
@@ -31,7 +31,7 @@ public class ml {
   }
 
   // Метод для использования самой модели
-  private static Float[] model(Encoding[] encodedTokens) throws OrtException {
+  private static Float[] model(Encoding... encodedTokens) throws OrtException {
     // Создаём окружение для нашей модели и запускаем сессию
     LOG.info("Начало работы модели");
     OrtEnvironment  env = OrtEnvironment.getEnvironment();
@@ -82,6 +82,7 @@ public class ml {
   }
 
   //Математическая функция, позволяющая преобразовать сырые логиты в вероятности
+  @SuppressWarnings("PMD.UseVarargs")
   private static float[][] softmax(float[][] logits) {
     LOG.info("Начало вычисления softmax");
     float[][] probabilities = new float[logits.length][logits[0].length];
@@ -108,33 +109,26 @@ public class ml {
   }
 
   // Метод, позволяющий создать Мапу из двух списков
+  @SuppressWarnings("PMD.UseVarargs")
   private static <T, V> Map<T, V> createMapFromArrays(T[] keys, V[] values) {
     LOG.info("Создание мапы из массивов");
     Map<T, V> map = new HashMap<>();
     for (int i = 0; i < keys.length; i++) {
       map.put(keys[i], values[i]);
     }
-    LOG.info("Мапа создана. Количество элементов: {}", map.size());
+    if (LOG.isInfoEnabled()) {
+      LOG.info("Мапа создана. Количество элементов: {}", map.size());
+    }
     return map;
   }
 
   // Метод для нахождения вероятностей соответствия каждой категории тексту
-  public static Map<String, Float> findProbabilitiesForCategories(String text, String[] candidateLabels) throws IOException, OrtException {
+  public static Map<String, Float> findProbabilitiesForCategories(String text, String... candidateLabels) throws IOException, OrtException {
     LOG.info("Начало обработки текста");
     Encoding[] encodedTokens = tokenizer(text, candidateLabels);
     Float[] entailmentProbabilitiesForCandidates = model(encodedTokens);
     Map<String, Float> probabilitiesForCategories = createMapFromArrays(candidateLabels, entailmentProbabilitiesForCandidates);
     LOG.info("Обработка текста завершена. Результат: {}", probabilitiesForCategories);
     return probabilitiesForCategories;
-  }
-
-  public static void main(String[] args) throws IOException, OrtException {
-    String text = "Как настроить CI/CD для проекта на GitLab?";
-    String[] candidateLabels = {"DevOps", "IT", "Frontend", "Backend", "Data Science", "Machine Learning", "Cybersecurity", "Cloud Computing", "Mobile Development", "Game Development", "Database Administration"};
-
-    Encoding[] encodedTokens = tokenizer(text, candidateLabels);
-    Float[] entailmentProbabilitiesForCandidates = model(encodedTokens);
-    Map<String, Float> probabilitiesForCategories = createMapFromArrays(candidateLabels, entailmentProbabilitiesForCandidates);
-    System.out.println(probabilitiesForCategories);
   }
 }
