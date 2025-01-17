@@ -19,4 +19,9 @@ public class Article {
     this.date = date;
     this.text = text;
   }
+
+  @Override
+  public String toString() {
+    return (title + "\n" + date + "\n" + link + "\n" + text);
+  }
 }

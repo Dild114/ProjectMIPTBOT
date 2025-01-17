@@ -12,7 +12,7 @@ import org.jsoup.nodes.Document;
  * Парсер сайта: <a href="https://habr.com/ru/news/page1">habr</a>
  */
 @Slf4j
-public class HabrParser implements SiteParser {
+public class FirstParser implements SiteParser {
   private static final String site = "https://habr.com";
 
   @Override
@@ -25,7 +25,7 @@ public class HabrParser implements SiteParser {
     final List<Article> result = new ArrayList<>();
 
     try {
-      Document document = Jsoup.parse(url);
+      Document document = Jsoup.connect(url).get();
       var posts = document.select("article");
       for (var post : posts) {
         String title = post.select("h2.tm-title").text();

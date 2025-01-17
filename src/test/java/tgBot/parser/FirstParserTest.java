@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
-public class HabrParserTest {
+public class FirstParserTest {
   @Test
   void testParseAllSiteWithCustomHtml() {
-    SiteParser parser = new HabrParser();
+    SiteParser parser = new FirstParser();
 
     String html = """
                 <html>
@@ -43,15 +43,38 @@ public class HabrParserTest {
     assertEquals(2, articles.size());
 
     Article firstArticle = articles.get(0);
+    String currentValue = """
+        Title 1
+        2024-10-01
+        https://habr.com/link1
+        Text 1""";
+    assertEquals(currentValue, firstArticle.toString());
     assertEquals("https://habr.com/link1", firstArticle.getLink());
     assertEquals("Title 1", firstArticle.getTitle());
     assertEquals("Text 1", firstArticle.getText());
     assertEquals("2024-10-01", firstArticle.getDate());
 
     Article secondArticle = articles.get(1);
+    currentValue = """
+        Title 2
+        2024-10-02
+        https://habr.com/link2
+        Text 2""";
     assertEquals("https://habr.com/link2", secondArticle.getLink());
     assertEquals("Title 2", secondArticle.getTitle());
     assertEquals("Text 2", secondArticle.getText());
     assertEquals("2024-10-02", secondArticle.getDate());
   }
+
+  @Test
+  void test() {
+    SiteParser parser = new FirstParser();
+    List<Article> articles = parser.parseAllSite();
+    for (var article : articles) {
+      assertEquals("2", article.toString());
+    }
+
+  }
 }
+
+
