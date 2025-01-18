@@ -1,13 +1,14 @@
 package app.api.stub;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
 
 public class ApiStub {
-  private static final Logger LOG = LogManager.getLogger(ApiStub.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ApiStub.class);
 
   public static void main(String[] args) {
     Spark.port(4567);
