@@ -1,5 +1,6 @@
 package tgBot.parser;
 
+import org.jsoup.nodes.Document;
 import java.util.List;
 
 /**
@@ -20,5 +21,5 @@ public interface SiteParser {
    * @param url - сайт с которого считываем данные.
    * @return массив, в котором хранятся ключевые элементы
    */
-  List<Article> parseAllSite(String url);
+  List<Article> parseAllSite(String url, Document document);
 }
