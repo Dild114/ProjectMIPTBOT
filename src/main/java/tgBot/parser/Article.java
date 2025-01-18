@@ -22,6 +22,6 @@ public class Article {
 
   @Override
   public String toString() {
-    return (title + "\n" + date + "\n" + link + "\n" + text);
+    return title + "\n" + date + "\n" + link + "\n" + text;
   }
 }

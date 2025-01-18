@@ -31,7 +31,6 @@ public class SecondParser implements SiteParser {
   public List<Article> parseAllSite(String url, Document document) {
     final List<Article> data = new ArrayList<>();
     try {
-      if (document == null) document = Jsoup.connect(url).get();
       var posts = document.select("div.js-pagination-element.cm-article-main.pt-16.pb-24.mt-32\\:md.pos-rel.zi-5");
       for (var post : posts) {
         String title = post.select("h2.mb-12 a.txt-secondary-9").text();
