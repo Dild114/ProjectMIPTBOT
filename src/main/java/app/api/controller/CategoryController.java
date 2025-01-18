@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Service;
 
-public class CategoryController {
+public class CategoryController implements Controller {
   private static final Logger LOG = LoggerFactory.getLogger(ArticleController.class);
   private final Service service;
   private final CategoryService categoryService;
@@ -21,5 +21,9 @@ public class CategoryController {
 
   @Override
   public void initializeEndpoints() {
+    getCategory();
+  }
+
+  private void getCategory() {
   }
 }
