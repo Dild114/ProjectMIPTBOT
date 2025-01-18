@@ -17,21 +17,28 @@ public class FirstParser implements SiteParser {
 
   @Override
   public List<Article> parseAllSite() {
-    return parseAllSite("https://habr.com/ru/news/page1");
+    String url = "https://habr.com/ru/news/page1";
+    List<Article> articles = null;
+    try {
+      Document document = Jsoup.connect(url).get();
+      articles = parseAllSite("https://habr.com/ru/news/page1", document);
+    } catch (Exception e) {
+      log.error("Ошибка во время парсинга сайта: {}", url, e);
+    }
+    return articles;
   }
 
   @Override
-  public List<Article> parseAllSite(String url) {
+  public List<Article> parseAllSite(String url, Document document) {
     final List<Article> data = new ArrayList<>();
-
     try {
-      Document document = Jsoup.connect(url).get();
       var posts = document.select("article");
       for (var post : posts) {
         String title = post.select("h2.tm-title").text();
         String link = site + post.select("h2.tm-title a.tm-title__link").attr("href");
         String text = post.select("div.tm-article-body").text();
         String date = post.select("div.tm-article-snippet__meta-container span a.tm-article-datetime-published").text();
+
         data.add(new Article(title, link, text.substring(0, text.length() - 13), date));
       }
     } catch (Exception e) {

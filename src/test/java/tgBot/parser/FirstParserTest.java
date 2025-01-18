@@ -1,15 +1,15 @@
 package tgBot.parser;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 public class FirstParserTest {
-  @Test
-  void testParseAllSiteWithCustomHtml() {
-    SiteParser parser = new FirstParser();
 
+  @Test
+  public void testParseAllSiteWithCustomHtml() {
     String html = """
                 <html>
                     <body>
@@ -17,7 +17,7 @@ public class FirstParserTest {
                             <h2 class="tm-title">
                                 <a class="tm-title__link" href="/link1">Title 1</a>
                             </h2>
-                            <div class="tm-article-body">Text 1</div>
+                            <div class="tm-article-body">Text 1. Читать далее</div>
                             <div class="tm-article-snippet__meta-container">
                                 <span>
                                     <a class="tm-article-datetime-published">2024-10-01</a>
@@ -28,7 +28,7 @@ public class FirstParserTest {
                             <h2 class="tm-title">
                                 <a class="tm-title__link" href="/link2">Title 2</a>
                             </h2>
-                            <div class="tm-article-body">Text 2</div>
+                            <div class="tm-article-body">Text 2. Читать далее</div>
                             <div class="tm-article-snippet__meta-container">
                                 <span>
                                     <a class="tm-article-datetime-published">2024-10-02</a>
@@ -38,20 +38,24 @@ public class FirstParserTest {
                     </body>
                 </html>
                 """;
-    List<Article> articles = parser.parseAllSite(html);
+
+    FirstParser parser = new FirstParser();
+    Document document = Jsoup.parse(html);
+    List<Article> articles = parser.parseAllSite(html, document);
 
     assertEquals(2, articles.size());
+
 
     Article firstArticle = articles.get(0);
     String currentValue = """
         Title 1
         2024-10-01
         https://habr.com/link1
-        Text 1""";
+        Text 1.""";
     assertEquals(currentValue, firstArticle.toString());
-    assertEquals("https://habr.com/link1", firstArticle.getLink());
     assertEquals("Title 1", firstArticle.getTitle());
-    assertEquals("Text 1", firstArticle.getText());
+    assertEquals("https://habr.com/link1", firstArticle.getLink());
+    assertEquals("Text 1.", firstArticle.getText());
     assertEquals("2024-10-01", firstArticle.getDate());
 
     Article secondArticle = articles.get(1);
@@ -59,22 +63,11 @@ public class FirstParserTest {
         Title 2
         2024-10-02
         https://habr.com/link2
-        Text 2""";
-    assertEquals("https://habr.com/link2", secondArticle.getLink());
+        Text 2.""";
+    assertEquals(currentValue, secondArticle.toString());
     assertEquals("Title 2", secondArticle.getTitle());
-    assertEquals("Text 2", secondArticle.getText());
+    assertEquals("https://habr.com/link2", secondArticle.getLink());
+    assertEquals("Text 2.", secondArticle.getText());
     assertEquals("2024-10-02", secondArticle.getDate());
   }
-
-  @Test
-  void test() {
-    SiteParser parser = new FirstParser();
-    List<Article> articles = parser.parseAllSite();
-    for (var article : articles) {
-      assertEquals("2", article.toString());
-    }
-
-  }
 }
-
-

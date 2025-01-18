@@ -17,14 +17,21 @@ public class SecondParser implements SiteParser {
 
   @Override
   public List<Article> parseAllSite() {
-    return parseAllSite("https://timeweb.com/ru/community/");
+    String url = "https://timeweb.com/ru/community/";
+    try {
+      Document document = Jsoup.connect(url).get();
+      return parseAllSite("url", document);
+    } catch (Exception e) {
+      log.error("Ошибка во время парсинга сайта: {}", url, e);
+    }
+    return null;
   }
 
   @Override
-  public List<Article> parseAllSite(String url) {
+  public List<Article> parseAllSite(String url, Document document) {
     final List<Article> data = new ArrayList<>();
     try {
-      Document document = Jsoup.connect(url).get();
+      if (document == null) document = Jsoup.connect(url).get();
       var posts = document.select("div.js-pagination-element.cm-article-main.pt-16.pb-24.mt-32\\:md.pos-rel.zi-5");
       for (var post : posts) {
         String title = post.select("h2.mb-12 a.txt-secondary-9").text();
