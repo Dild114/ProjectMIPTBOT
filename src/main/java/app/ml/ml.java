@@ -123,12 +123,43 @@ public class ml {
   }
 
   // Метод для нахождения вероятностей соответствия каждой категории тексту
-  public static Map<String, Float> findProbabilitiesForCategories(String text, String... candidateLabels) throws IOException, OrtException {
+  private static Map<String, Float> findProbabilitiesForCategories(String text, String... candidateLabels) throws IOException, OrtException {
     LOG.info("Начало обработки текста");
     Encoding[] encodedTokens = tokenizer(text, candidateLabels);
     Float[] entailmentProbabilitiesForCandidates = model(encodedTokens);
     Map<String, Float> probabilitiesForCategories = createMapFromArrays(candidateLabels, entailmentProbabilitiesForCandidates);
     LOG.info("Обработка текста завершена. Результат: {}", probabilitiesForCategories);
     return probabilitiesForCategories;
+  }
+
+  // Метод для получения двух категорий с наибольшей вероятностью из всех данных
+  public static Map<String, Float> findTwoMostProbableCategories(String text, String... candidateLabels) throws IOException, OrtException {
+    Map<String, Float> probabilitiesForCategories = findProbabilitiesForCategories(text, candidateLabels);
+    
+    String keyForFirstMax = "";
+    Float probabilityForFirstMax = Float.NEGATIVE_INFINITY;
+    String keyForSecondMax = "";
+    Float probabilityForSecondMax = Float.NEGATIVE_INFINITY;
+
+    for (String currentCategory : candidateLabels) {
+      Float currentProbability = probabilitiesForCategories.get(currentCategory);
+      if (currentProbability > probabilityForFirstMax) {
+        keyForSecondMax = keyForFirstMax;
+        probabilityForSecondMax = probabilityForFirstMax;
+        keyForFirstMax = currentCategory;
+        probabilityForFirstMax = currentProbability;
+      } else if (currentProbability > probabilityForSecondMax) {
+        keyForSecondMax = currentCategory;
+        probabilityForSecondMax = currentProbability;
+      }
+    }
+    Map<String, Float> mapForTwoCategoriesWithMaxProbabilities = new HashMap<>();
+    if (!keyForFirstMax.isEmpty()) {
+      mapForTwoCategoriesWithMaxProbabilities.put(keyForFirstMax, probabilityForFirstMax);
+    }
+    if (!keyForSecondMax.isEmpty()) {
+      mapForTwoCategoriesWithMaxProbabilities.put(keyForSecondMax, probabilityForSecondMax);
+    }
+    return mapForTwoCategoriesWithMaxProbabilities;
   }
 }
