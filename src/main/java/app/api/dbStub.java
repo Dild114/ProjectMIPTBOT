@@ -51,8 +51,14 @@ public class dbStub implements dbRepository {
   }
 
   @Override
-  public boolean deleteCategory(CategoryId id) {
-    return categories.removeIf(category -> category.id().equals(id));
+  public boolean deleteCategory(CategoryId id, UserId userId) {
+    for (Category category : categories) {
+      if (category.userId().equals(userId)) {
+        categories.remove(category);
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
@@ -75,8 +81,14 @@ public class dbStub implements dbRepository {
   }
 
   @Override
-  public List<Site> findAllSite() {
-    return new ArrayList<>(sites);
+  public List<Site> findAllSite(UserId userId) {
+    List<Site> answerSites = new ArrayList<>();
+    for (Site site : sites) {
+      if (site.userId().equals(userId)) {
+        answerSites.add(site);
+      }
+    }
+    return answerSites;
   }
 
   @Override

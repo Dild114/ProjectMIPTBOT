@@ -13,8 +13,8 @@ public class SiteService {
     this.siteRepository = siteRepository;
   }
 
-  public List<Site> getSites() {
-    return siteRepository.findAllSite();
+  public List<Site> getSites(UserId userId) {
+    return siteRepository.findAllSite(userId);
   }
   public void deleteSite(SiteId siteId, UserId userId) {
     siteRepository.deleteSiteById(siteId, userId);

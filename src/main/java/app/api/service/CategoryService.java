@@ -23,9 +23,9 @@ public class CategoryService {
       throw new CategoryFindException("Article with id " + id + " not found", e);
     }
   }
-  public void delete(CategoryId id)  throws CategoryNotFoundException {
+  public void delete(CategoryId id, UserId userId)  throws CategoryNotFoundException {
     try {
-      categoryRepository.delete(id);
+      categoryRepository.delete(id, userId);
     } catch (CategoryNotFoundException e) {
       throw new CategoryNotFoundException("Category with id " + id + " not found", e);
     }

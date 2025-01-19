@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SiteRepository {
   SiteId getSiteId(Site site);
-  List<Site> findAllSite();
+  List<Site> findAllSite(UserId userId);
   void deleteSiteById(SiteId id, UserId userId);
   void add(SiteId siteId, UserId userId);
 }

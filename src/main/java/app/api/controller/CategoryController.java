@@ -1,11 +1,9 @@
 package app.api.controller;
 
-import app.api.controller.request.CategoryAddRequest;
-import app.api.controller.request.SiteSetRequest;
+import app.api.controller.request.CategoryRequest;
 import app.api.entity.Category;
 import app.api.entity.CategoryId;
 import app.api.entity.UserId;
-import app.api.service.ArticleService;
 import app.api.service.CategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -57,10 +55,10 @@ public class CategoryController implements Controller {
         (Request request, Response response) -> {
         response.type("application/json");
           String body = request.body();
-          CategoryAddRequest categoryAddRequest = objectMapper.readValue(body, CategoryAddRequest.class);
+          CategoryRequest categoryRequest = objectMapper.readValue(body, CategoryRequest.class);
 
-          int userid = categoryAddRequest.userId();
-          String nameCategory = categoryAddRequest.nameCategory();
+          int userid = categoryRequest.userId();
+          String nameCategory = categoryRequest.nameCategory();
           try {
             CategoryId id = categoryService.create(nameCategory, new UserId(userid));
             response.status(201);
@@ -77,8 +75,11 @@ public class CategoryController implements Controller {
       (Request request, Response response) -> {
       response.type("application/json");
       int id = Integer.parseInt(request.params(":id"));
-      try {
-        categoryService.delete(new CategoryId(id));
+      String body = request.body();
+      CategoryRequest categoryRequest = objectMapper.readValue(body, CategoryRequest.class);
+
+        try {
+        categoryService.delete(new CategoryId(id), new UserId(categoryRequest.userId()));
         response.status(204);
         return objectMapper.writeValueAsString("OK");
       } catch (Exception e) {

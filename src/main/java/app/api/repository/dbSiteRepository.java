@@ -21,8 +21,8 @@ public class dbSiteRepository implements SiteRepository {
   }
 
   @Override
-  public List<Site> findAllSite() {
-    return db.findAllSite();
+  public List<Site> findAllSite(UserId userId) {
+    return db.findAllSite(userId);
   }
 
   @Override

@@ -35,8 +35,8 @@ public class dbCategoryRepository implements CategoryRepository {
   }
 
   @Override
-  public void delete(CategoryId id) {
-    boolean flag = db.deleteCategory(id);
+  public void delete(CategoryId id, UserId userId) {
+    boolean flag = db.deleteCategory(id, userId);
     if (!flag) {
       throw new dbNotFoundException("Category not found");
     }

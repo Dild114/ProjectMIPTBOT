@@ -11,12 +11,12 @@ public interface dbRepository {
   List<Category> findAllCategory();
   Category findCategoryById(CategoryId id);
   boolean addCategory(Category category);
-  boolean deleteCategory(CategoryId id);
+  boolean deleteCategory(CategoryId id, UserId userId);
 
   SiteId generateIdSite();
   void deleteSiteById(SiteId id, UserId userId);
   void addSite(Site site);
-  List<Site> findAllSite();
+  List<Site> findAllSite(UserId userId);
   Site findSiteById(SiteId id);
 
   UserId generateUserId();

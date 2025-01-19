@@ -15,6 +15,7 @@ import spark.Response;
 import spark.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class SiteController implements Controller {
   private static final Logger LOG = LoggerFactory.getLogger(SiteController.class);
@@ -55,7 +56,17 @@ public class SiteController implements Controller {
     service.get("/sites",
       (Request request, Response response) -> {
       response.type("application/json");
-      return objectMapper.writeValueAsString(siteService.getSites());
+        String body = request.body();
+        SiteSetRequest sites = objectMapper.readValue(body, SiteSetRequest.class);
+      try {
+        List<Site> siteList = siteService.getSites(new UserId(sites.userId()));
+        response.status(200);
+        return objectMapper.writeValueAsString(siteList);
+      } catch (Exception e) {
+        response.status(400);
+        LOG.warn("error find sites userId:" + sites.userId());
+        return objectMapper.writeValueAsString("Error");
+      }
       });
   }
 
@@ -91,7 +102,7 @@ public class SiteController implements Controller {
 
           siteService.deleteSite(new SiteId(id), new UserId(siteSetRequest.userId()));
           response.status(204);
-          return objectMapper.writeValueAsString(siteService.getSites());
+          return objectMapper.writeValueAsString(siteService.getSites(new UserId(siteSetRequest.userId())));
         } catch (Exception e) {
           response.status(400);
           LOG.warn(e.getMessage() + "not found id: " + id);
