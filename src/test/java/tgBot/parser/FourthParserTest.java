@@ -52,11 +52,11 @@ public class FourthParserTest {
             Title 1
             None
             https://3dnews.ru/link1
-            Text 1.""";
+            Text 1""";
     assertEquals(currentValue, firstArticle.toString());
     assertEquals("Title 1", firstArticle.getTitle());
     assertEquals("https://3dnews.ru/link1", firstArticle.getLink());
-    assertEquals("Text 1.", firstArticle.getText());
+    assertEquals("Text 1", firstArticle.getText());
     assertEquals("None", firstArticle.getDate());
 
     Article secondArticle = articles.get(1);
@@ -64,11 +64,11 @@ public class FourthParserTest {
             Title 2
             None
             https://3dnews.ru/link2
-            Text 2.""";
+            Text 2""";
     assertEquals(currentValue, secondArticle.toString());
     assertEquals("Title 2", secondArticle.getTitle());
     assertEquals("https://3dnews.ru/link2", secondArticle.getLink());
-    assertEquals("Text 2.", secondArticle.getText());
+    assertEquals("Text 2", secondArticle.getText());
     assertEquals("None", secondArticle.getDate());
   }
 }
