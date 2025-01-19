@@ -19,16 +19,27 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UserId generateId() {
-        return null;
+        String sql = "SELECT nextval('user_id_seq')";
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return new UserId(resultSet.getInt(1));
+            } else {
+                throw new UserCreateException("Failed to generate user ID");
+            }
+        } catch (SQLException e) {
+            throw new UserCreateException("Failed to generate user ID", e);
+        }
     }
 
     @Override
     public void createAccount(User user) {
-        String sql = "INSERT INTO users (id, name, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (id, username, password, email) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, user.telegramId().id());
             statement.setString(2, user.userName());
             statement.setString(3, user.password());
+            statement.setString(4, user.email() != null ? user.email() : ""); 
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new UserCreateException("Failed to create user", e);
@@ -37,10 +48,18 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteAccount(UserId userId) {
-        String sql = "DELETE FROM users WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, userId.id());
-            int affectedRows = statement.executeUpdate();
+        String checkSql = "SELECT 1 FROM users WHERE id = ?";
+        String deleteSql = "DELETE FROM users WHERE id = ?";
+        try (PreparedStatement checkStatement = connection.prepareStatement(checkSql);
+             PreparedStatement deleteStatement = connection.prepareStatement(deleteSql)) {
+            checkStatement.setInt(1, userId.id());
+            try (ResultSet resultSet = checkStatement.executeQuery()) {
+                if (!resultSet.next()) {
+                    throw new UserNotFoundException("User with id " + userId + " not found");
+                }
+            }
+            deleteStatement.setInt(1, userId.id());
+            int affectedRows = deleteStatement.executeUpdate();
             if (affectedRows == 0) {
                 throw new UserNotFoundException("User with id " + userId + " not found");
             }
