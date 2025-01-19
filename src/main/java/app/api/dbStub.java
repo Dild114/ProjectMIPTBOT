@@ -8,13 +8,20 @@ import app.api.entity.Site;
 import app.api.entity.SiteId;
 import app.api.entity.User;
 import app.api.entity.UserId;
+import app.api.repository.SiteRepository;
 import app.api.repository.dbRepository;
+import app.api.stub.mlStubRepository;
+import app.ml.FindCategoryRepository;
+import tgBot.parser.ArticleParser;
+import tgBot.parser.ParserManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class dbStub implements dbRepository {
   private List<Article> articles = new ArrayList<>();
+  private FindCategoryRepository findCategoryRepository;
   private List<Category> categories = new ArrayList<>();
   private final List<Site> sites = new ArrayList<>();
   private final List<User> users = new ArrayList<>();
@@ -29,10 +36,24 @@ public class dbStub implements dbRepository {
   }
 
   @Override
-  public List<Article> getArticles(UserId userId) {
-
-    // наверное тут буду делать запрос на парсер и мл а потом мы добавляем артиклы
-    return new ArrayList<>(articles);
+  // наверное тут буду делать запрос на парсер и мл а потом мы добавляем артиклы
+  public HashMap<Article, Category> getArticles(UserId userId) {
+    HashMap<Article, Category> answerArticles = new HashMap<>();
+    for (Site site : sites) {
+      if (site.userId().equals(userId)) {
+        List<ArticleParser> articleList = ParserManager.Manager(site.url().getUrl());
+        for (int i = articleList.size() - 1; i >= articleList.size() - 5; i--) {
+          String category = findCategoryRepository.findCategory(articleList.get(i).getText());
+          for (Category category1 : categories) {
+            if (category1.userId().equals(userId) && category.equals(category1.name())) {
+              Article newArticle = new Article(articleList.get(i).getTitle(), generateIdArticle(), articleList.get(i).getLink(), category1.id());
+              answerArticles.put(newArticle, category1);
+            }
+          }
+        }
+      }
+    }
+    return answerArticles;
   }
 
   @Override

@@ -2,8 +2,10 @@ package app.api.repository;
 
 import app.api.entity.Article;
 import app.api.entity.ArticleId;
+import app.api.entity.Category;
 import app.api.entity.UserId;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class dbArticleRepository implements ArticleRepository {
@@ -18,7 +20,7 @@ public class dbArticleRepository implements ArticleRepository {
   }
 
   @Override
-  public List<Article> getArticles(UserId userId) {
+  public HashMap<Article, Category> getArticles(UserId userId) {
     return db.getArticles(userId);
   }
 

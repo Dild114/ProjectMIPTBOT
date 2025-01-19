@@ -2,6 +2,7 @@ package app.api.controller;
 
 import app.api.controller.request.ArticleRequest;
 import app.api.entity.Article;
+import app.api.entity.Category;
 import app.api.entity.UserId;
 import app.api.service.ArticleService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import spark.Request;
 import spark.Response;
 import spark.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ArticleController implements Controller {
@@ -37,7 +39,7 @@ public class ArticleController implements Controller {
       ArticleRequest articleRequest = objectMapper.readValue(body, ArticleRequest.class);
       try {
         // тут тоже нужен userId сделано
-        List<Article> articles = articleService.getArticles(new UserId(articleRequest.userId()));
+        HashMap<Article, Category> articles = articleService.getArticles(new UserId(articleRequest.userId()));
         response.status(200);
         return objectMapper.writeValueAsString(articles);
       } catch (Exception e) {

@@ -16,7 +16,7 @@ public class SecondParser implements SiteParser {
   private static final String site = "https://timeweb.com";
 
   @Override
-  public List<Article> parseAllSite() {
+  public List<ArticleParser> parseAllSite() {
     String url = "https://timeweb.com/ru/community/";
     try {
       Document document = Jsoup.connect(url).get();
@@ -28,8 +28,8 @@ public class SecondParser implements SiteParser {
   }
 
   @Override
-  public List<Article> parseAllSite(String url, Document document) {
-    final List<Article> data = new ArrayList<>();
+  public List<ArticleParser> parseAllSite(String url, Document document) {
+    final List<ArticleParser> data = new ArrayList<>();
     try {
       var posts = document.select("div.js-pagination-element.cm-article-main.pt-16.pb-24.mt-32\\:md.pos-rel.zi-5");
       for (var post : posts) {
@@ -37,7 +37,7 @@ public class SecondParser implements SiteParser {
         String link = site + post.select("h2.mb-12 a.txt-secondary-9").attr("href");
         String text = post.select("div.font-style-1.mb-24.txt-secondary-9").text();
         String date = post.select("time").text();
-        data.add(new Article(title, link, text, date));
+        data.add(new ArticleParser(title, link, text, date));
       }
     } catch (Exception e) {
       log.error("Ошибка во время парсинга сайта: {}", url, e);
