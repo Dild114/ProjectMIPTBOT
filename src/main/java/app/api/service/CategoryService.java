@@ -2,6 +2,7 @@ package app.api.service;
 
 import app.api.entity.Category;
 import app.api.entity.CategoryId;
+import app.api.entity.UserId;
 import app.api.repository.CategoryRepository;
 import app.api.service.exception.*;
 
@@ -30,9 +31,9 @@ public class CategoryService {
     }
   }
 
-  public CategoryId create(String name) {
+  public CategoryId create(String name, UserId userId) {
     CategoryId categoryId = categoryRepository.getCategoryId();
-    Category category = new Category(categoryId, name, null);
+    Category category = new Category(categoryId, name, userId);
     try {
       categoryRepository.create(category);
     } catch (CategoryDuplicateException e) {

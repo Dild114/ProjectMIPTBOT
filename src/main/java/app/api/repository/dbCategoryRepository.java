@@ -2,6 +2,7 @@ package app.api.repository;
 
 import app.api.entity.Category;
 import app.api.entity.CategoryId;
+import app.api.entity.UserId;
 import app.api.repository.exception.dbDuplicateException;
 import app.api.repository.exception.dbNotFoundException;
 

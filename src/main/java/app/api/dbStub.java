@@ -23,6 +23,7 @@ public class dbStub implements dbRepository {
 
   @Override
   public List<Article> getArticles() {
+    // наверное тут буду делать запрос на парсер и мл а потом мы добавляем артиклы
     return new ArrayList<>(articles);
   }
 
