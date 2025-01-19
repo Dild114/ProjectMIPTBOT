@@ -5,7 +5,6 @@ import app.api.entity.Site;
 import app.api.entity.SiteId;
 import app.api.entity.UserId;
 import app.api.repository.exception.dbNotFoundException;
-import org.eclipse.jetty.util.log.Log;
 
 import java.util.List;
 
@@ -29,15 +28,14 @@ public class dbSiteRepository implements SiteRepository {
   public void deleteSiteById(SiteId siteId, UserId userId) {
     try {
       db.deleteSiteById(siteId, userId);
-    } catch (Exception e) {
-      throw new dbNotFoundException("not found id " + siteId);
+    } catch (dbNotFoundException e) {
+      throw new dbNotFoundException("Not found site", e);
     }
   }
 
   @Override
   public void add(SiteId siteId, UserId userId) {
-    if (siteId == null) {
-    } else if (siteId.siteId() == 1) {
+    if (siteId.siteId() == 1) {
       Site site = new Site(new SiteId(1), Sites.SITE1.getUrl(), userId);
       db.addSite(site);
     } else if (siteId.siteId() == 2) {

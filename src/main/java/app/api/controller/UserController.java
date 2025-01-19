@@ -1,9 +1,7 @@
 package app.api.controller;
 
 import app.api.controller.request.UserCreateRequest;
-import app.api.entity.User;
 import app.api.entity.UserId;
-import app.api.service.ArticleService;
 import app.api.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -42,7 +40,9 @@ public class UserController implements Controller {
             response.status(201);
             return objectMapper.writeValueAsString("OK your id: " + id);
           } catch (Exception e) {
-            LOG.warn("UserCreateException");
+            if (LOG.isErrorEnabled()) {
+              LOG.error("UserCreateException");
+            }
             response.status(400);
             return objectMapper.writeValueAsString("ERROR");
           }
@@ -58,7 +58,9 @@ public class UserController implements Controller {
           response.status(204);
           return objectMapper.writeValueAsString("delete with id " + userId);
         } catch (Exception e) {
-        LOG.warn("UserDeleteException");
+          if (LOG.isErrorEnabled()) {
+            LOG.error("UserDeleteException");
+          }
         response.status(404);
         return objectMapper.writeValueAsString("ERROR NOT FOUND");}
         });

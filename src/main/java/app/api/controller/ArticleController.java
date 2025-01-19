@@ -2,7 +2,6 @@ package app.api.controller;
 
 import app.api.controller.request.ArticleRequest;
 import app.api.entity.Article;
-import app.api.entity.ArticleId;
 import app.api.entity.UserId;
 import app.api.service.ArticleService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +42,9 @@ public class ArticleController implements Controller {
         return objectMapper.writeValueAsString(articles);
       } catch (Exception e) {
         response.status(500);
-        LOG.error("Error when getting articles");
+        if (LOG.isErrorEnabled()) {
+          LOG.error("Error when getting articles");
+        }
         return objectMapper.writeValueAsString("Error when getting articles");
       }
     });

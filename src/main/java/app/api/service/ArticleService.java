@@ -1,10 +1,8 @@
 package app.api.service;
 
 import app.api.entity.Article;
-import app.api.entity.ArticleId;
 import app.api.entity.UserId;
 import app.api.repository.ArticleRepository;
-import app.api.service.exception.*;
 
 import java.util.List;
 

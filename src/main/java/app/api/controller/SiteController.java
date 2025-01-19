@@ -1,12 +1,10 @@
 package app.api.controller;
 
 import app.api.controller.request.SiteSetRequest;
-import app.api.controller.request.UserCreateRequest;
 import app.api.entity.Site;
 import app.api.entity.SiteId;
 import app.api.entity.UserId;
 import app.api.service.SiteService;
-import app.api.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +62,9 @@ public class SiteController implements Controller {
         return objectMapper.writeValueAsString(siteList);
       } catch (Exception e) {
         response.status(400);
-        LOG.warn("error find sites userId:" + sites.userId());
+        if (LOG.isErrorEnabled()) {
+          LOG.error("error find sites userId:{}", sites.userId());
+        }
         return objectMapper.writeValueAsString("Error");
       }
       });
@@ -86,7 +86,9 @@ public class SiteController implements Controller {
           return objectMapper.writeValueAsString("OK id: " + siteId);
         } catch (Exception e) {
           response.status(400);
-          LOG.warn(e.getMessage());
+          if (LOG.isErrorEnabled()) {
+            LOG.error("error add site id:{}", id);
+          }
           return objectMapper.writeValueAsString("Add Error");
         }
       });
@@ -105,7 +107,9 @@ public class SiteController implements Controller {
           return objectMapper.writeValueAsString(siteService.getSites(new UserId(siteSetRequest.userId())));
         } catch (Exception e) {
           response.status(400);
-          LOG.warn(e.getMessage() + "not found id: " + id);
+          if (LOG.isErrorEnabled()) {
+            LOG.error("error delete site id:{}", id);
+          }
           return objectMapper.writeValueAsString("Delete Error");
         }
         });

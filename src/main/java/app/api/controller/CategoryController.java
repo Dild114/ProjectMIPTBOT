@@ -46,7 +46,9 @@ public class CategoryController implements Controller {
             response.status(200);
             return json;
           } catch (Exception e) {
-          LOG.error("failed to get all categories", e);
+            if (LOG.isErrorEnabled()) {
+              LOG.error("failed to get all categories", e);
+            }
           response.status(500);
           return objectMapper.writeValueAsString("error");
           }

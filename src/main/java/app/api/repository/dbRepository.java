@@ -1,6 +1,14 @@
 package app.api.repository;
 
-import app.api.entity.*;
+
+import app.api.entity.Article;
+import app.api.entity.ArticleId;
+import app.api.entity.Category;
+import app.api.entity.CategoryId;
+import app.api.entity.Site;
+import app.api.entity.SiteId;
+import app.api.entity.User;
+import app.api.entity.UserId;
 
 import java.util.List;
 
