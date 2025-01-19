@@ -20,8 +20,8 @@ public class dbCategoryRepository implements CategoryRepository {
   }
 
   @Override
-  public List<Category> findAll() {
-    return db.findAllCategory();
+  public List<Category> findAll(UserId userId) {
+    return db.findAllCategory(userId);
   }
 
   @Override
@@ -43,10 +43,11 @@ public class dbCategoryRepository implements CategoryRepository {
   }
 
   @Override
-  public void create(Category category) {
+  public boolean create(Category category) {
     boolean flag = db.addCategory(category);
     if (!flag) {
       throw new dbDuplicateException("Category not found");
     }
+    return flag;
   }
 }

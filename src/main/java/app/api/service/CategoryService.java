@@ -13,8 +13,8 @@ public class CategoryService {
   public CategoryService(CategoryRepository categoryRepository) {
     this.categoryRepository = categoryRepository;
   }
-  public List<Category> findAll() {
-    return categoryRepository.findAll();
+  public List<Category> findAll(UserId userId) {
+    return categoryRepository.findAll(userId);
   }
   public Category findById(CategoryId id)  throws CategoryFindException {
     try {

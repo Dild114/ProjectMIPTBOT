@@ -22,7 +22,8 @@ public class dbStub implements dbRepository {
   }
 
   @Override
-  public List<Article> getArticles() {
+  public List<Article> getArticles(UserId userId) {
+
     // наверное тут буду делать запрос на парсер и мл а потом мы добавляем артиклы
     return new ArrayList<>(articles);
   }
@@ -33,8 +34,14 @@ public class dbStub implements dbRepository {
   }
 
   @Override
-  public List<Category> findAllCategory() {
-    return new ArrayList<>(categories);
+  public List<Category> findAllCategory(UserId userId) {
+    List<Category> answerCategory = new ArrayList<>();
+    for (Category category : categories) {
+      if (category.userId().equals(userId)) {
+        answerCategory.add(category);
+      }
+    }
+    return answerCategory;
   }
 
   @Override

@@ -2,6 +2,7 @@ package app.api.service;
 
 import app.api.entity.Article;
 import app.api.entity.ArticleId;
+import app.api.entity.UserId;
 import app.api.repository.ArticleRepository;
 import app.api.service.exception.*;
 
@@ -13,8 +14,8 @@ public class ArticleService {
     this.articleRepository = articleRepository;
   }
 
-  public List<Article> getArticles() {
-    return articleRepository.getArticles();
+  public List<Article> getArticles(UserId userId) {
+    return articleRepository.getArticles(userId);
   }
 //  public List<Article> findAll() {
 //    return articleRepository.findAll();

@@ -9,11 +9,11 @@ import java.util.List;
 public interface CategoryRepository {
   CategoryId getCategoryId();
 
-  List<Category> findAll();
+  List<Category> findAll(UserId userId);
 
   Category findById(CategoryId id);
 
   void delete(CategoryId id, UserId userId);
 
-  void create(Category category);
+  boolean create(Category category);
 }

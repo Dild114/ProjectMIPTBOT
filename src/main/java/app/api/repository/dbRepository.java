@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface dbRepository {
   ArticleId generateIdArticle();
-  List<Article> getArticles();
+  List<Article> getArticles(UserId userId);
   CategoryId generateIdCategory();
-  List<Category> findAllCategory();
+  List<Category> findAllCategory(UserId userId);
   Category findCategoryById(CategoryId id);
   boolean addCategory(Category category);
   boolean deleteCategory(CategoryId id, UserId userId);

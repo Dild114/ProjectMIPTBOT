@@ -1,7 +1,9 @@
 package app.api.controller;
 
+import app.api.controller.request.ArticleRequest;
 import app.api.entity.Article;
 import app.api.entity.ArticleId;
+import app.api.entity.UserId;
 import app.api.service.ArticleService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -32,8 +34,11 @@ public class ArticleController implements Controller {
   private void getArticle() {
     service.get("/articles",
       (Request request, Response response) -> {
+      String body = request.body();
+      ArticleRequest articleRequest = objectMapper.readValue(body, ArticleRequest.class);
       try {
-        List<Article> articles = articleService.getArticles();
+        // тут тоже нужен userId сделано
+        List<Article> articles = articleService.getArticles(new UserId(articleRequest.userId()));
         response.status(200);
         return objectMapper.writeValueAsString(articles);
       } catch (Exception e) {

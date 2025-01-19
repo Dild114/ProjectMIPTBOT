@@ -28,17 +28,20 @@ public class CategoryController implements Controller {
 
   @Override
   public void initializeEndpoints() {
-    getAllCategory();
+    getMyCategory();
     addCategory();
     deleteCategory();
   }
 
-  private void getAllCategory() {
+  private void getMyCategory() {
     service.get("/categories",
         (Request request, Response response) -> {
           response.type("application/json");
+          String body = request.body();
+          CategoryRequest categoryRequest = objectMapper.readValue(body, CategoryRequest.class);
           try {
-            List<Category> categories = categoryService.findAll();
+            // нужна проверка по userId и изменить название на myCategories сделано
+            List<Category> categories = categoryService.findAll(new UserId(categoryRequest.userId()));
             String json = objectMapper.writeValueAsString(categories);
             response.status(200);
             return json;
