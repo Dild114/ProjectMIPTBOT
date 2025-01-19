@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 
 /**
@@ -33,7 +34,8 @@ public class FirstParser implements SiteParser {
     final List<Article> data = new ArrayList<>();
     try {
       var posts = document.select("article");
-      for (var post : posts) {
+      for (int i = 0; i < posts.size() && i < 10; i++) {
+        Element post = posts.get(i);
         String title = post.select("h2.tm-title").text();
         String link = site + post.select("h2.tm-title a.tm-title__link").attr("href");
         String text = post.select("div.tm-article-body").text();
