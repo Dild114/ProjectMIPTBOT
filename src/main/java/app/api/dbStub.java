@@ -130,6 +130,7 @@ public class dbStub implements dbRepository {
         categories.remove(category);
       }
     }
+
     for (Site site : sites) {
       if (site.userId().equals(userId)) {
         sites.remove(site);
