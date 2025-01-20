@@ -59,7 +59,7 @@ public class dbStub implements dbRepository {
     for (Site site : sites) {
       if (site.userId().id() == userId.id()) {
         List<ArticleParser> articleList = ParserManager.Manager(site.url().getUrl());
-        for (int i = articleList.size() - 1; i >= articleList.size() - 3; i--) {
+        for (int i = articleList.size() - 1; i >= articleList.size() - 2; i--) {
           Map<String, Float> categoryMl = findTwoMostProbableCategories.findTwoMostProbableCategories(articleList.get(i).getText(), categoriesUser.toArray(new String[0]));
           for (Category category : categoriesUserFull) {
             if (categoryMl.containsKey(category.name()) && categoryMl.get(category.name()) > max) {
@@ -72,6 +72,8 @@ public class dbStub implements dbRepository {
           if (max >= 0.088) {
             answerArticles.put(newArticle, maxCategory);
           }
+          max = -1;
+          maxCategory = new Category(new CategoryId(-1), null, null);
         }
       }
     }

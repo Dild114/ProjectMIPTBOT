@@ -34,7 +34,7 @@ public class FirstParser implements SiteParser {
     final List<ArticleParser> data = new ArrayList<>();
     try {
       var posts = document.select("article");
-      for (int i = 0; i < posts.size() && i < 10; i++) {
+      for (int i = 0; i < posts.size() && i < 4; i++) {
         Element post = posts.get(i);
         String title = post.select("h2.tm-title").text();
         String link = site + post.select("h2.tm-title a.tm-title__link").attr("href");
