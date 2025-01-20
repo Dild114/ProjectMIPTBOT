@@ -1,6 +1,5 @@
 package tgBot.parser;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,25 +36,13 @@ public class ThirdParser implements SiteParser {
         String title = post.select("header h3.entry-title").text();
         String link = post.select("header h3.entry-title a").attr("href");
         String text = post.select("p.block-exb").text();
-        String date = DateParser(link);
+        String date = "None";
         data.add(new ArticleParser(title, link, text, date));
       }
     } catch (Exception e) {
       log.error("Ошибка во время парсинга сайта: {}", url, e);
     }
     return data;
-  }
-
-  private String DateParser(String url) {
-    String date = "None";
-    try {
-      Document document = Jsoup.connect(url).get();
-      String[] list = document.select("div.bd-container div.bdaia-post-date span").text().split(" ");
-      date = list[0] + " " + list[1] + " " + list[2];
-    } catch (IOException e) {
-      return date;
-    }
-    return date;
   }
 }
 
