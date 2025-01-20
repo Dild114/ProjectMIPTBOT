@@ -1,3 +1,5 @@
 package app.api.entity;
 
-public record Site(SiteId id, String url, UserId userId) {}
+import app.api.controller.Sites;
+
+public record Site(SiteId id, Sites url, UserId userId) {}

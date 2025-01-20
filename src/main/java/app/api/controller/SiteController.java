@@ -12,6 +12,7 @@ import spark.Request;
 import spark.Response;
 import spark.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,10 +43,14 @@ public class SiteController implements Controller {
         String site1Url = Sites.SITE1.getUrl();
         String site2Url = Sites.SITE2.getUrl();
         String site3Url = Sites.SITE3.getUrl();
+        String site4Url = Sites.SITE4.getUrl();
+        String site5Url = Sites.SITE5.getUrl();
         HashMap<String, Integer> hashSite = new HashMap<>();
         hashSite.put(site1Url, 1);
         hashSite.put(site2Url, 2);
         hashSite.put(site3Url, 3);
+        hashSite.put(site4Url, 4);
+        hashSite.put(site5Url, 5);
         return objectMapper.writeValueAsString("Выберите сайт:\n" + hashSite);
         });
   }
@@ -59,7 +64,11 @@ public class SiteController implements Controller {
       try {
         List<Site> siteList = siteService.getSites(new UserId(sites.userId()));
         response.status(200);
-        return objectMapper.writeValueAsString(siteList);
+        List<String> responseList = new ArrayList<>();
+        for (Site site : siteList) {
+          responseList.add(site.url().getUrl());
+        }
+        return objectMapper.writeValueAsString(responseList);
       } catch (Exception e) {
         response.status(400);
         if (LOG.isErrorEnabled()) {
@@ -104,7 +113,7 @@ public class SiteController implements Controller {
 
           siteService.deleteSite(new SiteId(id), new UserId(siteSetRequest.userId()));
           response.status(204);
-          return objectMapper.writeValueAsString(siteService.getSites(new UserId(siteSetRequest.userId())));
+          return objectMapper.writeValueAsString("OK");
         } catch (Exception e) {
           response.status(400);
           if (LOG.isErrorEnabled()) {

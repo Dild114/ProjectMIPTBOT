@@ -17,8 +17,8 @@ public class FifthParser implements SiteParser {
   private static final String site = "https://www.ixbt.com/news/";
 
   @Override
-  public List<Article> parseAllSite() {
-    List<Article> articles = null;
+  public List<ArticleParser> parseAllSite() {
+    List<ArticleParser> articles = null;
     try {
       Document document = Jsoup.connect(site).get();
       articles = parseAllSite(site, document);
@@ -29,8 +29,8 @@ public class FifthParser implements SiteParser {
   }
 
   @Override
-  public List<Article> parseAllSite(String url, Document document) {
-    final List<Article> data = new ArrayList<>();
+  public List<ArticleParser> parseAllSite(String url, Document document) {
+    final List<ArticleParser> data = new ArrayList<>();
     try {
       var posts = document.select("div.g-grid_column.g-grid_column__big li.item.item__border");
       for (var post : posts) {
@@ -39,7 +39,7 @@ public class FifthParser implements SiteParser {
         String text = post.select("div.item__text__top").text();
         String date = post.select("span.time_iteration_icon_light").text();
 
-        data.add(new Article(String.join(" ", Arrays.copyOfRange(title, 1, title.length)), link, text, date));
+        data.add(new ArticleParser(String.join(" ", Arrays.copyOfRange(title, 1, title.length)), link, text, date));
       }
     } catch (Exception e) {
       log.error("Ошибка во время парсинга сайта: {}", url, e);

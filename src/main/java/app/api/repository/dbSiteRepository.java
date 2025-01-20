@@ -36,13 +36,19 @@ public class dbSiteRepository implements SiteRepository {
   @Override
   public void add(SiteId siteId, UserId userId) {
     if (siteId.siteId() == 1) {
-      Site site = new Site(new SiteId(1), Sites.SITE1.getUrl(), userId);
+      Site site = new Site(new SiteId(1), Sites.SITE1, userId);
       db.addSite(site);
     } else if (siteId.siteId() == 2) {
-      Site site = new Site(new SiteId(2), Sites.SITE2.getUrl(), userId);
+      Site site = new Site(new SiteId(2), Sites.SITE2, userId);
       db.addSite(site);
     } else if (siteId.siteId() == 3) {
-      Site site = new Site(new SiteId(3), Sites.SITE3.getUrl(), userId);
+      Site site = new Site(new SiteId(3), Sites.SITE3, userId);
+      db.addSite(site);
+    } else if (siteId.siteId() == 4) {
+      Site site = new Site(new SiteId(4), Sites.SITE4, userId);
+      db.addSite(site);
+    } else if (siteId.siteId() == 5) {
+      Site site = new Site(new SiteId(5), Sites.SITE5, userId);
       db.addSite(site);
     }
   }
