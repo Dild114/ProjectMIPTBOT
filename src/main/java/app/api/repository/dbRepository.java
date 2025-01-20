@@ -1,6 +1,7 @@
 package app.api.repository;
 
 
+import ai.onnxruntime.OrtException;
 import app.api.entity.Article;
 import app.api.entity.ArticleId;
 import app.api.entity.Category;
@@ -10,12 +11,13 @@ import app.api.entity.SiteId;
 import app.api.entity.User;
 import app.api.entity.UserId;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.List;
 
 public interface dbRepository {
   ArticleId generateIdArticle();
-  Map<Article, Category> getArticles(UserId userId);
+  Map<Article, Category> getArticles(UserId userId) throws IOException, OrtException;
   CategoryId generateIdCategory();
   List<Category> findAllCategory(UserId userId);
   Category findCategoryById(CategoryId id);

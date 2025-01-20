@@ -15,7 +15,7 @@ public class mlTest {
   void findTwoMostProbableCategories() throws IOException, OrtException {
     String text = "Как настроить CI/CD для проекта на GitLab?";
     String[] candidateLabels = {"DevOps", "IT", "Frontend", "Backend", "Data Science", "Machine Learning", "Cybersecurity", "Cloud Computing", "Mobile Development", "Game Development", "Database Administration"};
-
+    ml ml = new ml();
     Map<String, Float> probabilities = ml.findTwoMostProbableCategories(text, candidateLabels);
     
     Map<String, Float> mapForTwoCategoriesWithMaxProbabilities = new HashMap<>();

@@ -13,7 +13,7 @@ import ai.djl.util.PairList;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class ml {
+public class ml implements FindTwoMostProbableCategories {
   private static final Logger LOG = LoggerFactory.getLogger(ml.class);
 
   // Токенизация текста заранее сохранённым токенизатором
@@ -132,8 +132,9 @@ public class ml {
     return probabilitiesForCategories;
   }
 
+  @Override
   // Метод для получения двух категорий с наибольшей вероятностью из всех данных
-  public static Map<String, Float> findTwoMostProbableCategories(String text, String... candidateLabels) throws IOException, OrtException {
+  public Map<String, Float> findTwoMostProbableCategories(String text, String... candidateLabels) throws IOException, OrtException {
     Map<String, Float> probabilitiesForCategories = findProbabilitiesForCategories(text, candidateLabels);
 
     String keyForFirstMax = "";

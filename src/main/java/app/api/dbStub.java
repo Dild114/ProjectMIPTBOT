@@ -1,5 +1,6 @@
 package app.api;
 
+import ai.onnxruntime.OrtException;
 import app.api.entity.Article;
 import app.api.entity.ArticleId;
 import app.api.entity.Category;
@@ -9,18 +10,21 @@ import app.api.entity.SiteId;
 import app.api.entity.User;
 import app.api.entity.UserId;
 import app.api.repository.dbRepository;
-import app.ml.FindCategoryRepository;
+import app.ml.FindTwoMostProbableCategories;
+import com.beust.ah.A;
 import tgBot.parser.ArticleParser;
 import tgBot.parser.ParserManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class dbStub implements dbRepository {
   // private List<Article> articles = new ArrayList<>();
   // вообще нужно возвращать категорию если ее вероятность > 70%
-  private FindCategoryRepository findCategoryRepository;
+  private FindTwoMostProbableCategories findTwoMostProbableCategories;
   private List<Category> categories = new ArrayList<>();
   private final List<Site> sites = new ArrayList<>();
   private final List<User> users = new ArrayList<>();
@@ -29,8 +33,8 @@ public class dbStub implements dbRepository {
   private int siteIdCounter = 1;
   private int userIdCounter = 1;
 
-  public dbStub(FindCategoryRepository findCategoryRepository) {
-    this.findCategoryRepository = findCategoryRepository;
+  public dbStub(FindTwoMostProbableCategories findCategoryRepository) {
+    this.findTwoMostProbableCategories = findCategoryRepository;
   }
 
   @Override
@@ -41,31 +45,41 @@ public class dbStub implements dbRepository {
   @Override
   // наверное тут буду делать запрос на парсер и мл а потом мы добавляем артиклы
   // по идеи бд не должно хранить дубликаты статей, оставлю это на части бд
-  public HashMap<Article, Category> getArticles(UserId userId) {
+  public HashMap<Article, Category> getArticles(UserId userId) throws IOException, OrtException {
     HashMap<Article, Category> answerArticles = new HashMap<>();
     List<String> categoriesUser = new ArrayList<>();
+    List<Category> categoriesUserFull = new ArrayList<>();
     for (Category category : categories) {
       if (category.userId().id() == userId.id()) {
         categoriesUser.add(category.name());
+        categoriesUserFull.add(category);
       }
     }
-
+    float max = -1;
+    Category maxCategory = new Category(new CategoryId(-1), null, null);
     for (Site site : sites) {
       if (site.userId().id() == userId.id()) {
         List<ArticleParser> articleList = ParserManager.Manager(site.url().getUrl());
         for (int i = articleList.size() - 1; i >= articleList.size() - 3; i--) {
-          String categoryMl = findCategoryRepository.findCategory(articleList.get(i).getText(), categoriesUser);
-          for (Category category1 : categories) {
-            if (category1.name().equals(categoryMl)) {
-              Article newArticle = new Article(articleList.get(i).getTitle(), generateIdArticle(), articleList.get(i).getLink(), category1.id());
-              answerArticles.put(newArticle, category1);
+          Map<String, Float> categoryMl = findTwoMostProbableCategories.findTwoMostProbableCategories(articleList.get(i).getText(), categoriesUser.toArray(new String[0]));
+          for (Category category : categoriesUserFull) {
+            if (categoryMl.containsKey(category.name())) {
+              if (categoryMl.get(category.name()) > max) {
+                max = categoryMl.get(category.name());
+                maxCategory = category;
+              }
             }
           }
-        }
+          ArticleParser articleParser = articleList.get(i);
+          Article newArticle = new Article(articleParser.getTitle(), generateIdArticle(), articleParser.getLink(), maxCategory.id());
+          if (max >= 0.088) {
+            answerArticles.put(newArticle, maxCategory);
+          }
         }
       }
-    return answerArticles;
     }
+    return answerArticles;
+  }
 
   @Override
   public CategoryId generateIdCategory() {

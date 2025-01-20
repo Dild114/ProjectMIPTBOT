@@ -55,7 +55,9 @@ public class CategoryController implements Controller {
           }
         });
   }
-
+  // "DevOps", "IT", "Frontend", "Backend", "Data Science",
+  // "Machine Learning", "Cybersecurity", "Cloud Computing",
+  // "Mobile Development", "Game Development", "Database Administration"};
   private void addCategory() {
     service.post("/category",
         (Request request, Response response) -> {
