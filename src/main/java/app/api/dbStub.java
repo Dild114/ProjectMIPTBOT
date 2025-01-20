@@ -18,7 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class dbStub implements dbRepository {
-  private List<Article> articles = new ArrayList<>();
+  // private List<Article> articles = new ArrayList<>();
+  // вообще нужно возвращать категорию если ее вероятность > 70%
   private FindCategoryRepository findCategoryRepository;
   private List<Category> categories = new ArrayList<>();
   private final List<Site> sites = new ArrayList<>();
@@ -48,10 +49,11 @@ public class dbStub implements dbRepository {
         categoriesUser.add(category.name());
       }
     }
+
     for (Site site : sites) {
       if (site.userId().id() == userId.id()) {
         List<ArticleParser> articleList = ParserManager.Manager(site.url().getUrl());
-        for (int i = articleList.size() - 1; i >= articleList.size() - 5; i--) {
+        for (int i = articleList.size() - 1; i >= articleList.size() - 3; i--) {
           String categoryMl = findCategoryRepository.findCategory(articleList.get(i).getText(), categoriesUser);
           for (Category category1 : categories) {
             if (category1.name().equals(categoryMl)) {
@@ -117,7 +119,7 @@ public class dbStub implements dbRepository {
   public void deleteSiteById(SiteId id, UserId userId) {
     List<Site> deleteSites = new ArrayList<>();
     for (Site site : sites) {
-      if ((site.userId().id() == userId.id()) && (site.id().siteId() == id.siteId())) {
+      if (site.userId().id() == userId.id() && site.id().siteId() == id.siteId()) {
         deleteSites.add(site);
       }
     }

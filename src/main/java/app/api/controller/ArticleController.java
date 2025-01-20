@@ -13,8 +13,7 @@ import spark.Response;
 import spark.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class ArticleController implements Controller {
   private static final Logger LOG = LoggerFactory.getLogger(ArticleController.class);
@@ -40,10 +39,9 @@ public class ArticleController implements Controller {
       ArticleRequest articleRequest = objectMapper.readValue(body, ArticleRequest.class);
       try {
         // тут тоже нужен userId сделано
-        HashMap<Article, Category> articles = articleService.getArticles(new UserId(articleRequest.userId()));
+        Map<Article, Category> articles = articleService.getArticles(new UserId(articleRequest.userId()));
         response.status(200);
         ArrayList<ArrayList<String>> pairs = new ArrayList<>();
-        HashMap<ArrayList<ArrayList<String>>, String> result = new HashMap<>();
         for (Article article : articles.keySet()) {
           ArrayList<String> pairin = new ArrayList<>();
           pairin.add(article.getName());

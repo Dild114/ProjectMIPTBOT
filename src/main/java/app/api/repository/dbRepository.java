@@ -10,12 +10,12 @@ import app.api.entity.SiteId;
 import app.api.entity.User;
 import app.api.entity.UserId;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 public interface dbRepository {
   ArticleId generateIdArticle();
-  HashMap<Article, Category> getArticles(UserId userId);
+  Map<Article, Category> getArticles(UserId userId);
   CategoryId generateIdCategory();
   List<Category> findAllCategory(UserId userId);
   Category findCategoryById(CategoryId id);
