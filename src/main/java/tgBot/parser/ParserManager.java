@@ -10,8 +10,8 @@ public class ParserManager {
   private static final SiteParser HABRPARSER = new FirstParser();
   private static final SiteParser COMMUNITYPARSER = new SecondParser();
   private static final SiteParser XAKERPARSER = new ThirdParser();
-  private static final SiteParser D3NEWSPARSER = new ThirdParser();
-  private static final SiteParser IXBTPARSER = new ThirdParser();
+  private static final SiteParser D3NEWSPARSER = new FourthParser();
+  private static final SiteParser IXBTPARSER = new FifthParser();
   private static final Logger log = LogManager.getLogger(ParserManager.class);
 
   public static List<ArticleParser> Manager(String url) {
