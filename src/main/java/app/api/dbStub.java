@@ -11,7 +11,6 @@ import app.api.entity.User;
 import app.api.entity.UserId;
 import app.api.repository.dbRepository;
 import app.ml.FindTwoMostProbableCategories;
-import com.beust.ah.A;
 import tgBot.parser.ArticleParser;
 import tgBot.parser.ParserManager;
 
@@ -63,11 +62,9 @@ public class dbStub implements dbRepository {
         for (int i = articleList.size() - 1; i >= articleList.size() - 3; i--) {
           Map<String, Float> categoryMl = findTwoMostProbableCategories.findTwoMostProbableCategories(articleList.get(i).getText(), categoriesUser.toArray(new String[0]));
           for (Category category : categoriesUserFull) {
-            if (categoryMl.containsKey(category.name())) {
-              if (categoryMl.get(category.name()) > max) {
-                max = categoryMl.get(category.name());
-                maxCategory = category;
-              }
+            if (categoryMl.containsKey(category.name()) && categoryMl.get(category.name()) > max) {
+              max = categoryMl.get(category.name());
+              maxCategory = category;
             }
           }
           ArticleParser articleParser = articleList.get(i);

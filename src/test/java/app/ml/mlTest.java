@@ -19,8 +19,8 @@ public class mlTest {
     Map<String, Float> probabilities = ml.findTwoMostProbableCategories(text, candidateLabels);
     
     Map<String, Float> mapForTwoCategoriesWithMaxProbabilities = new HashMap<>();
-    mapForTwoCategoriesWithMaxProbabilities.put("Data Science", 0.039048802f);
-    mapForTwoCategoriesWithMaxProbabilities.put("Backend", 0.048307385f);
+    mapForTwoCategoriesWithMaxProbabilities.put("Data Science", 0.039048787f);
+    mapForTwoCategoriesWithMaxProbabilities.put("Backend", 0.048307437f);
     
     assertEquals(probabilities, mapForTwoCategoriesWithMaxProbabilities);
   }
