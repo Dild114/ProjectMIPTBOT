@@ -20,7 +20,6 @@ import app.api.stub.MlStubRepository;
 import app.ml.FindCategoryRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.Service;
-
 import java.util.List;
 
 public class Api {
