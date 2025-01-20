@@ -2,6 +2,7 @@ package app.api.controller;
 
 import app.api.controller.request.ArticleRequest;
 import app.api.entity.Article;
+import app.api.entity.Category;
 import app.api.entity.UserId;
 import app.api.service.ArticleService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,7 +12,8 @@ import spark.Request;
 import spark.Response;
 import spark.Service;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ArticleController implements Controller {
   private static final Logger LOG = LoggerFactory.getLogger(ArticleController.class);
@@ -37,9 +39,18 @@ public class ArticleController implements Controller {
       ArticleRequest articleRequest = objectMapper.readValue(body, ArticleRequest.class);
       try {
         // тут тоже нужен userId сделано
-        List<Article> articles = articleService.getArticles(new UserId(articleRequest.userId()));
+        Map<Article, Category> articles = articleService.getArticles(new UserId(articleRequest.userId()));
         response.status(200);
-        return objectMapper.writeValueAsString(articles);
+        ArrayList<ArrayList<String>> pairs = new ArrayList<>();
+        for (Article article : articles.keySet()) {
+          ArrayList<String> pairin = new ArrayList<>();
+          pairin.add(article.getName());
+          pairin.add(article.getUrl());
+          pairin.add(articles.get(article).name());
+          pairs.add(pairin);
+        }
+        // название article категория и ссылка
+        return objectMapper.writeValueAsString(pairs);
       } catch (Exception e) {
         response.status(500);
         if (LOG.isErrorEnabled()) {

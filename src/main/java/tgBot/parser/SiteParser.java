@@ -14,12 +14,12 @@ public interface SiteParser {
    * Ключевые элементы: заголовок, URL, краткий пересказ, дата публикации.
    * @return массив, в котором хранятся ключевые элементы
    */
-  List<Article> parseAllSite();
+  List<ArticleParser> parseAllSite();
 
   /**
    * Перегруженный метод парсера сайта, необходимый для тестирования.
    * @param url - сайт с которого считываем данные.
    * @return массив, в котором хранятся ключевые элементы
    */
-  List<Article> parseAllSite(String url, Document document);
+  List<ArticleParser> parseAllSite(String url, Document document);
 }

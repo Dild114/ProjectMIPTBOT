@@ -1,10 +1,14 @@
 package app.api.service;
 
+import ai.onnxruntime.OrtException;
 import app.api.entity.Article;
+import app.api.entity.Category;
 import app.api.entity.UserId;
 import app.api.repository.ArticleRepository;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.Map;
+
 
 public class ArticleService {
   private ArticleRepository articleRepository;
@@ -12,8 +16,12 @@ public class ArticleService {
     this.articleRepository = articleRepository;
   }
 
-  public List<Article> getArticles(UserId userId) {
-    return articleRepository.getArticles(userId);
+  public Map<Article, Category> getArticles(UserId userId) throws IOException, OrtException {
+    try {
+      return articleRepository.getArticles(userId);
+    } catch (OrtException e) {
+      return null;
+    }
   }
 //  public List<Article> findAll() {
 //    return articleRepository.findAll();
