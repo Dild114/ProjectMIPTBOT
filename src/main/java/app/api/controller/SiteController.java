@@ -43,10 +43,14 @@ public class SiteController implements Controller {
         String site1Url = Sites.SITE1.getUrl();
         String site2Url = Sites.SITE2.getUrl();
         String site3Url = Sites.SITE3.getUrl();
+        String site4Url = Sites.SITE4.getUrl();
+        String site5Url = Sites.SITE5.getUrl();
         HashMap<String, Integer> hashSite = new HashMap<>();
         hashSite.put(site1Url, 1);
         hashSite.put(site2Url, 2);
         hashSite.put(site3Url, 3);
+        hashSite.put(site4Url, 4);
+        hashSite.put(site5Url, 5);
         return objectMapper.writeValueAsString("Выберите сайт:\n" + hashSite);
         });
   }
