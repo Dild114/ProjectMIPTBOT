@@ -12,6 +12,7 @@ import spark.Request;
 import spark.Response;
 import spark.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,7 +42,17 @@ public class ArticleController implements Controller {
         // тут тоже нужен userId сделано
         HashMap<Article, Category> articles = articleService.getArticles(new UserId(articleRequest.userId()));
         response.status(200);
-        return objectMapper.writeValueAsString(articles);
+        ArrayList<ArrayList<String>> pairs = new ArrayList<>();
+        HashMap<ArrayList<ArrayList<String>>, String> result = new HashMap<>();
+        for (Article article : articles.keySet()) {
+          ArrayList<String> pairin = new ArrayList<>();
+          pairin.add(article.getName());
+          pairin.add(article.getUrl());
+          pairin.add(articles.get(article).name());
+          pairs.add(pairin);
+        }
+        // название article категория и ссылка
+        return objectMapper.writeValueAsString(pairs);
       } catch (Exception e) {
         response.status(500);
         if (LOG.isErrorEnabled()) {
