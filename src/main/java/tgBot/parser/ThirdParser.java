@@ -45,4 +45,3 @@ public class ThirdParser implements SiteParser {
     return data;
   }
 }
-
