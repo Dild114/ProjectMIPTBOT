@@ -1,5 +1,6 @@
 package app.api.controller;
 
+import app.api.controller.request.CategoryDeleteRequest;
 import app.api.controller.request.CategoryRequest;
 import app.api.entity.Category;
 import app.api.entity.CategoryId;
@@ -76,15 +77,16 @@ public class CategoryController implements Controller {
   }
 
   private void deleteCategory() {
-    service.post("/category/:id",
+    // нерпавильное удаление сейчас вроде исправил
+    service.delete("/category/:id",
       (Request request, Response response) -> {
       response.type("application/json");
       int id = Integer.parseInt(request.params(":id"));
       String body = request.body();
-      CategoryRequest categoryRequest = objectMapper.readValue(body, CategoryRequest.class);
+      CategoryDeleteRequest categoryDeleteRequest = objectMapper.readValue(body, CategoryDeleteRequest.class);
 
         try {
-        categoryService.delete(new CategoryId(id), new UserId(categoryRequest.userId()));
+        categoryService.delete(new CategoryId(id), new UserId(categoryDeleteRequest.userId()));
         response.status(204);
         return objectMapper.writeValueAsString("OK");
       } catch (Exception e) {

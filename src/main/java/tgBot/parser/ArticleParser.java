@@ -7,13 +7,13 @@ import lombok.Getter;
  * включая ссылку, заголовок, текст и дату публикации.
  */
 @Getter
-public class Article {
+public class ArticleParser {
   private String link;
   private String title;
   private String date;
   private String text;
 
-  public Article(String title, String link, String text, String date) {
+  public ArticleParser(String title, String link, String text, String date) {
     this.link = link;
     this.title = title;
     this.date = date;

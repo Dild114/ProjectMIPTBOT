@@ -1,10 +1,12 @@
 package app.api.service;
 
 import app.api.entity.Article;
+import app.api.entity.Category;
 import app.api.entity.UserId;
 import app.api.repository.ArticleRepository;
 
-import java.util.List;
+import java.util.Map;
+
 
 public class ArticleService {
   private ArticleRepository articleRepository;
@@ -12,7 +14,7 @@ public class ArticleService {
     this.articleRepository = articleRepository;
   }
 
-  public List<Article> getArticles(UserId userId) {
+  public Map<Article, Category> getArticles(UserId userId) {
     return articleRepository.getArticles(userId);
   }
 //  public List<Article> findAll() {

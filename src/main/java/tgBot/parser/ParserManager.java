@@ -12,8 +12,8 @@ public class ParserManager {
   private static final SiteParser XAKERPARSER = new ThirdParser();
   private static final Logger log = LogManager.getLogger(ParserManager.class);
 
-  public static List<Article> Manager(String url) {
-    List<Article> data = new ArrayList<>();
+  public static List<ArticleParser> Manager(String url) {
+    List<ArticleParser> data = new ArrayList<>();
     switch (url) {
       case "https://habr.com/ru/news/":
         data = HABRPARSER.parseAllSite();

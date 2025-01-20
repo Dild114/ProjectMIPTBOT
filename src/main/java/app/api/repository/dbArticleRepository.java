@@ -2,9 +2,10 @@ package app.api.repository;
 
 import app.api.entity.Article;
 import app.api.entity.ArticleId;
+import app.api.entity.Category;
 import app.api.entity.UserId;
 
-import java.util.List;
+import java.util.Map;
 
 public class dbArticleRepository implements ArticleRepository {
   dbRepository db;
@@ -18,7 +19,7 @@ public class dbArticleRepository implements ArticleRepository {
   }
 
   @Override
-  public List<Article> getArticles(UserId userId) {
+  public Map<Article, Category> getArticles(UserId userId) {
     return db.getArticles(userId);
   }
 
