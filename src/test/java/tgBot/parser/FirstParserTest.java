@@ -41,12 +41,12 @@ public class FirstParserTest {
 
     FirstParser parser = new FirstParser();
     Document document = Jsoup.parse(html);
-    List<Article> articles = parser.parseAllSite(html, document);
+    List<ArticleParser> articles = parser.parseAllSite(html, document);
 
     assertEquals(2, articles.size());
 
 
-    Article firstArticle = articles.get(0);
+    ArticleParser firstArticle = articles.get(0);
     String currentValue = """
         Title 1
         2024-10-01
@@ -58,7 +58,7 @@ public class FirstParserTest {
     assertEquals("Text 1.", firstArticle.getText());
     assertEquals("2024-10-01", firstArticle.getDate());
 
-    Article secondArticle = articles.get(1);
+    ArticleParser secondArticle = articles.get(1);
     currentValue = """
         Title 2
         2024-10-02

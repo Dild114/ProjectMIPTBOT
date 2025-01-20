@@ -43,11 +43,11 @@ public class FourthParserTest {
 
     FourthParser parser = new FourthParser();
     Document document = Jsoup.parse(html);
-    List<Article> articles = parser.parseAllSite("https://3dnews.ru/", document);
+    List<ArticleParser> articles = parser.parseAllSite("https://3dnews.ru/", document);
 
     assertEquals(2, articles.size());
 
-    Article firstArticle = articles.get(0);
+    ArticleParser firstArticle = articles.get(0);
     String currentValue = """
             Title 1
             None
@@ -59,7 +59,7 @@ public class FourthParserTest {
     assertEquals("Text 1", firstArticle.getText());
     assertEquals("None", firstArticle.getDate());
 
-    Article secondArticle = articles.get(1);
+    ArticleParser secondArticle = articles.get(1);
     currentValue = """
             Title 2
             None

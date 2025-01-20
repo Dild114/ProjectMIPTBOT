@@ -16,6 +16,8 @@ import app.api.service.ArticleService;
 import app.api.service.CategoryService;
 import app.api.service.SiteService;
 import app.api.service.UserService;
+import app.ml.FindTwoMostProbableCategories;
+import app.ml.ml;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import spark.Service;
 
@@ -25,7 +27,9 @@ public class Api {
   public static void main(String[] args) {
     Service service = Service.ignite();
     ObjectMapper objectMapper = new ObjectMapper();
-    dbStub db = new dbStub();
+    FindTwoMostProbableCategories findTwoMostProbableCategories = new ml();
+    // пока что временно это dbStub
+    dbStub db = new dbStub(findTwoMostProbableCategories);
     final ArticleRepository articleRepository = new dbArticleRepository(db);
     final UserRepository userRepository = new dbUserRepository(db);
     final SiteRepository siteRepository = new dbSiteRepository(db);

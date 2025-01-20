@@ -16,8 +16,8 @@ public class FourthParser implements SiteParser {
   private static final String site = "https://3dnews.ru/";
 
   @Override
-  public List<Article> parseAllSite() {
-    List<Article> articles = null;
+  public List<ArticleParser> parseAllSite() {
+    List<ArticleParser> articles = null;
     try {
       Document document = Jsoup.connect(site).get();
       articles = parseAllSite(site, document);
@@ -28,8 +28,8 @@ public class FourthParser implements SiteParser {
   }
 
   @Override
-  public List<Article> parseAllSite(String url, Document document) {
-    final List<Article> data = new ArrayList<>();
+  public List<ArticleParser> parseAllSite(String url, Document document) {
+    final List<ArticleParser> data = new ArrayList<>();
     try {
       var posts = document.select("div#news.content-block div.content-block-data.white");
       for (var post : posts) {
@@ -38,7 +38,7 @@ public class FourthParser implements SiteParser {
         String text = post.select("div.teaser").text();
         String date = "None";
 
-        data.add(new Article(title, link, text, date));
+        data.add(new ArticleParser(title, link, text, date));
       }
     } catch (Exception e) {
       log.error("Ошибка во время парсинга сайта: {}", url, e);
